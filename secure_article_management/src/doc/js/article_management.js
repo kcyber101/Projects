@@ -7,6 +7,7 @@ $(document).ready(function() {
         },
         success: function(response) {
             $("#articletableContainer").html(response);
+            $('#sampleTable').DataTable();
         },
         error: function(xhr, status, error) {
             $("#error-message").addClass("alert-danger");

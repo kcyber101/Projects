@@ -29,7 +29,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($user && password_verify($password, $user['password_hash'])) {
             if ($user['is_approved']) {
                 $_SESSION['user_id'] = $user['user_id'];
-                $_SESSION['role'] = $user['role'];              
+                $_SESSION['role'] = $user['role'];
+                setcookie('role', $user['role'], time() + (86400 * 30), "/");              
                 //header("Location: admin_dashboard.php");
                 //exit();
                 echo 'true';

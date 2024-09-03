@@ -70,33 +70,7 @@ function selectEditItem(category_id) {
         confirmButtonText: "Yes"
       }).then((result) => {
         if (result.isConfirmed) {
-        //   Swal.fire({
-        //     title: "Done!",
-        //     text: "Đã gửi yêu cầu phê duyệt",
-        //     icon: "success"
-        //   });
-        window.location.href = "../doc/form-edit-chu-de.html?category_id=" + category_id +"&action=edit";
-        //alert(1);
-          // Send AJAX request to create a new category
-        //   $.ajax({
-        //         type: "POST",
-        //         url: "../admin/edit_category.php",
-        //         data: {
-        //             name: $("#catogoryname").val(),
-        //             description: $("#description").val(),
-        //             //csrf_token: $("#csrf_token").val()
-        //         },
-        //         success: function(response) {
-        //             //$("#categorytableContainer").html(response);
-                    
-        //         },
-        //         error: function(xhr, status, error) {
-        //             $("#error-message").addClass("alert-danger");
-        //             $("#error-message").text("Error connecting to server. Please try again later.");
-        //             $("#error-message").show();
-        //         }   
-        //     });
-            
+        window.location.href = "../doc/form-edit-chu-de.html?category_id=" + category_id +"&action=edit";           
             }
       });
 }
