@@ -7,7 +7,7 @@ $(document).ready(function() {
         },
         success: function(response) {
             $("#articletableContainer").html(response);
-            $('#sampleTable').DataTable();
+            //$('#sampleTable').DataTable();
         },
         error: function(xhr, status, error) {
             $("#error-message").addClass("alert-danger");
@@ -59,6 +59,49 @@ function approveItem(article_id) {
     //setTimeout(function(){location.reload(); }, 5000);
 }
 
+
+function createItem() {
+    Swal.fire({
+        title: "Save",
+        text: "Bạn chắc chắn muốn lưu bài viết?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire({
+            title: "Done!",
+            text: "Đã gửi yêu cầu phê duyệt",
+            icon: "success"
+          });
+          // Send AJAX request to create a new category
+          $.ajax({
+                type: "POST",
+                url: "../admin/create_article.php",
+                data: {
+                    title: $("#titleArticle").val(),
+                    content: CKEDITOR.instances.mota.getData(),
+                    category_id: $('select option').filter(':selected').val(), 
+                    //csrf_token: $("#csrf_token").val()
+                },
+                success: function(response) {
+                    // swal("Đã gửi phê duyệt!", {
+                    //     icon: "success",
+                    // });
+                    window.location.href = "../doc/table-data-article.html";
+                },
+                error: function(xhr, status, error) {
+                    $("#error-message").addClass("alert-danger");
+                    $("#error-message").text("Error connecting to server. Please try again later.");
+                    $("#error-message").show();
+                }   
+            });
+            
+            }
+      });
+}
 
 function saveItem(article_id) {
     Swal.fire({

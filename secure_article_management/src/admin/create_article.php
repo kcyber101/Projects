@@ -3,7 +3,6 @@ session_start();
 include '../connect.php';
 
 
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $title = $_POST['title'];
     $content = $_POST['content'];
@@ -16,11 +15,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     //header('Location: article_management.php');
 }
 
-// Truy vấn danh sách chủ đề
-$sql = "SELECT category_id, name FROM categories";
-$stmt = $conn->query($sql);
-$categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// if (isset($_POST[""])) {
 
-// ?>
+?>
