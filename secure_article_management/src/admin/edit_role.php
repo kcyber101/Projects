@@ -1,22 +1,32 @@
 <?php
+session_start();
 include '../connect.php';
 
-if (isset($_POST['user_id']) && isset($_POST['role'])) {
+if (isset($_POST['user_id']) && isset($_POST['role']) && isset($_POST['csrf_token'])) {
     $userId = $_POST['user_id'];
     $role = $_POST['role'];
-    $query = "UPDATE users SET role = ? WHERE user_id = ?";
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param('si', $role, $userId);
-
-    if ($stmt->execute()) {
-        echo 'Role updated successfully.';
-    } else {
-        echo 'Error updating role.';
+    $csrf_token = $_POST['csrf_token'];
+    
+    // Validate CSRF token  
+    if (!hash_equals($_SESSION['csrf_token'], $csrf_token)) {
+        echo 'Invalid CSRF token.';
+        exit;
     }
 
-    $stmt->close();
+    $query = "UPDATE users SET role = ? WHERE user_id = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->execute([$role,$userId]);
+    //$stmt->bind_param('si', $role, $userId);
+
+    if ($stmt->execute()) {
+        echo preg_replace('~[\r\n]+~', '', "true");
+    } else {
+        //echo 'Error updating role.';
+        echo "false";
+    }
+
+
 }
 
-$conn->close();
-?>
 
+?>

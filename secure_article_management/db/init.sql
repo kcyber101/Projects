@@ -7,6 +7,7 @@ USE secure_article_management;
 -- Tạo bảng quản lý người dùng
 CREATE TABLE users (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
+    uuid varchar(36) AUTO_INCREMENT NOT NULL UNIQUE,
     username VARCHAR(50) NOT NULL UNIQUE,
     password_hash VARCHAR(255) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
@@ -33,6 +34,9 @@ CREATE TABLE articles (
     author_id INT NOT NULL,
     category_id INT,
     is_approved BOOLEAN DEFAULT FALSE,
+    author_edited BOOLEAN DEFAULT FALSE,
+    author_deleted BOOLEAN DEFAULT FALSE,
+    post_created BOOLEAN DEFAULT FALSE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (author_id) REFERENCES users(user_id) ON DELETE CASCADE,
@@ -42,7 +46,7 @@ CREATE TABLE articles (
 -- Tạo bảng lịch sử thay đổi bài viết (article_revisions)
 CREATE TABLE article_revisions (
     revision_id INT AUTO_INCREMENT PRIMARY KEY,
-    article_id INT NOT NULL,
+      INT NOT NULL,
     previous_content TEXT NOT NULL,
     revised_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     revised_by INT NOT NULL,

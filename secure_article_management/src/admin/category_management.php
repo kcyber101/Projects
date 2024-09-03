@@ -1,49 +1,49 @@
 <?php
+session_start();
 include '../connect.php';
 
 // Truy vấn danh sách chủ đề và thống kê bài viết
 $sql = "
-SELECT c.category_id, c.name, c.description, COUNT(a.article_id) AS article_count
+SELECT c.category_id, c.name, c.description, COUNT(a.article_id) AS article_count, c.created_at, c.updated_at
 FROM categories c
 LEFT JOIN articles a ON c.category_id = a.category_id
 GROUP BY c.category_id";
 $stmt = $conn->query($sql);
 $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
-?>
 
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <title>Quản lý chủ đề</title>
-</head>
-<body>
-    <h1>Danh sách chủ đề</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Tên chủ đề</th>
-                <th>Mô tả</th>
-                <th>Số bài viết</th>
-                <th>Thao tác</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($categories as $category): ?>
-                <tr>
-                    <td><?php echo htmlspecialchars($category['category_id']); ?></td>
-                    <td><?php echo htmlspecialchars($category['name']); ?></td>
-                    <td><?php echo htmlspecialchars($category['description']); ?></td>
-                    <td><?php echo htmlspecialchars($category['article_count']); ?></td>
-                    <td>
-                        <a href="edit_category.php?id=<?php echo $category['category_id']; ?>">Sửa</a> |
-                        <a href="delete_category.php?id=<?php echo $category['category_id']; ?>">Xoá</a>
-                    </td>
-                </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-    <a href="create_category.php">Tạo chủ đề mới</a>
-</body>
-</html>
+if (isset($_POST['action'])) {
+    $action = $_POST['action'];
+    if ( $action == "list_category") {
+        foreach ($categories as $category):
+            echo '<option value="'.$category['category_id'].'">'.$category['name'].'</option>'."\n";
+        endforeach;
+    }
+}else {
+    // Example data
+    // <tr>
+    // <td width="10"><input type="checkbox" name="check1" value="1"></td>
+    // <td>MD0837</td>
+    // <td>Web Hacking</td>
+    // <td>Lỗ hổng ứng dụng web</td>
+    // <td>2</td>
+    // <td>2/9/2024</td>
+    // <td><span class="badge bg-success">LVBACH</span></td>
+    // <td><button class="btn btn-primary btn-sm trash" type="button" title="Xóa"><i class="fas fa-trash-alt"></i> </button>
+    //   <button class="btn btn-primary btn-sm edit" type="button" title="Sửa"><i class="fa fa-edit"></i></button></td>
+    // </tr
+    foreach ($categories as $category):
+        echo "<tr>";
+        echo '<td width="10"><input type="checkbox" name="check1" value="1"></td>'."\n";
+        echo    "<td>".htmlspecialchars($category['category_id'])."</td>\n";
+        echo    "<td>".htmlspecialchars($category['name'])."</td>\n";
+        echo    "<td>".htmlspecialchars($category['description'])."</td>\n";
+        echo    "<td>".htmlspecialchars($category['article_count'])."</td>\n";
+        echo    "<td>".htmlspecialchars($category['created_at'])."</td>\n";
+        echo    '<td><span class="badge bg-success">LVBACH</span></td>'."\n";
+        echo    '<td><button class="btn btn-primary btn-sm trash" type="button" title="Xóa"><i class="fas fa-trash-alt"></i> </button>'."\n";
+        echo     '<button class="btn btn-primary btn-sm edit" type="button" title="Sửa" onclick="selectEditItem('.$category['category_id'].')"><i class="fa fa-edit"></i></button></td>'."\n";
+        echo "</tr>\n";
+     endforeach;
+}
+
+?>

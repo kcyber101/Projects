@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         }
         // Remove CSRF token from session to prevent reuse
-        $_SESSION['csrf_token'] = bin2hex(random_bytes(32));          
+        //$_SESSION['csrf_token'] = bin2hex(random_bytes(32));          
     }
 }
 ?>
