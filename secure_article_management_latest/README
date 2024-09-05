@@ -27,7 +27,7 @@ Dưới đây là toàn bộ thông tin của source mình:
 
 -------------------------
 TODO
-
+- Thay đổi user_id sang
 - Kiểm soát truy cập, phân quyền cho người dùng cùng vai trò
 - Bắt lỗi của tất cả các chức năng
 - Bổ sung chức năng Nhật ký hoạt động của người dùng
