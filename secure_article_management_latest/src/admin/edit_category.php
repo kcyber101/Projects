@@ -3,7 +3,7 @@ session_start();
 include '../connect.php';
 
 // Chinh sua chu de
-if ($_SESSION['role'] === 'editor') {
+if ($_SESSION['role'] === 'editor' || $_SESSION['role'] === 'admin') {
     if (isset($_POST['category_id']) && isset($_POST['action']) && $_POST['action'] === "edit" ) {
         $categoryId = intval($_POST["category_id"]);
     

@@ -4,9 +4,10 @@ include '../connect.php';
 
 // Truy vấn danh sách chủ đề và thống kê bài viết
 $sql = "
-SELECT c.category_id, c.name, c.description, COUNT(a.article_id) AS article_count, c.created_at, c.updated_at
+SELECT c.category_id, c.name, c.description, COUNT(a.article_id) AS article_count, c.created_at, c.updated_at, d.username AS editor_name
 FROM categories c
 LEFT JOIN articles a ON c.category_id = a.category_id
+LEFT JOIN users d ON c.editor_id = d.user_id
 GROUP BY c.category_id";
 $stmt = $conn->query($sql);
 $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -15,7 +16,8 @@ if (isset($_POST['action'])) {
     $action = $_POST['action'];
     if ( $action == "list_category") {
         foreach ($categories as $category):
-            echo '<option value="'.$category['category_id'].'">'.$category['name'].'</option>'."\n";
+            //prevent XSS attacks on the option value by using htmlspecialchars() function 
+            echo '<option value="'.$category['category_id'].'">'.($category['name']).'</option>'."\n";
         endforeach;
     }
 }else {
@@ -35,15 +37,16 @@ if (isset($_POST['action'])) {
         echo "<tr>";
         echo '<td width="10"><input type="checkbox" name="check1" value="1"></td>'."\n";
         echo    "<td>".htmlspecialchars($category['category_id'])."</td>\n";
-        echo    "<td>".htmlspecialchars($category['name'])."</td>\n";
+        echo    "<td>".($category['name'])."</td>\n";
         echo    "<td>".htmlspecialchars($category['description'])."</td>\n";
         echo    "<td>".htmlspecialchars($category['article_count'])."</td>\n";
         echo    "<td>".htmlspecialchars($category['created_at'])."</td>\n";
-        echo    '<td><span class="badge bg-success">LVBACH</span></td>'."\n";
-        echo    '<td><button class="btn btn-primary btn-sm trash" type="button" title="Xóa"><i class="fas fa-trash-alt"></i> </button>'."\n";
+        echo    '<td><span class="badge bg-success">'.htmlspecialchars($category['editor_name']).'</span></td>'."\n";
+        echo    '<td><button class="btn btn-primary btn-sm trash" type="button" title="Xóa" onclick="deleteItem('.$category['category_id'].')"><i class="fas fa-trash-alt"></i> </button>'."\n";
         echo     '<button class="btn btn-primary btn-sm edit" type="button" title="Sửa" onclick="selectEditItem('.$category['category_id'].')"><i class="fa fa-edit"></i></button></td>'."\n";
         echo "</tr>\n";
      endforeach;
+        echo '<input type="hidden" name="csrf_token" id="csrf_token" value="'.($_SESSION['csrf_token'] ?? '').'">';
 }
 
 ?>

@@ -2,8 +2,8 @@
 session_start();
 include '../connect.php';
 
-if (isset($_POST['id']) && isset($_POST['csrf_token']) && isset($_SESSION['role'])) {
-    $userId = intval($_POST['id']);
+if (isset($_POST['user_id']) && isset($_POST['csrf_token']) && isset($_SESSION['role'])) {
+    $userId = intval($_POST['user_id']);
     $csrf_token = $_POST['csrf_token'];
 
     // Validate CSRF token
@@ -27,8 +27,8 @@ if (isset($_POST['id']) && isset($_POST['csrf_token']) && isset($_SESSION['role'
     $stmt = $conn->prepare($sql);
     $stmt->execute([$userId]);
     echo 'true';    
-    header('Location: ../doc/table-data-user.html');
+    // header('Location: ../doc/table-data-user.html');
 }else {
-    echo 'Permission denied';
+    throw new Exception('Permission denied');
 }
 ?>

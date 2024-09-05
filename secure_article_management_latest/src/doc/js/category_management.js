@@ -28,11 +28,11 @@ function saveItem() {
         confirmButtonText: "Yes"
       }).then((result) => {
         if (result.isConfirmed) {
-          Swal.fire({
-            title: "Done!",
-            text: "Đã gửi yêu cầu phê duyệt",
-            icon: "success"
-          });
+        //   Swal.fire({
+        //     title: "Done!",
+        //     text: "Đã gửi yêu cầu phê duyệt",
+        //     icon: "success"
+        //   });
           // Send AJAX request to create a new category
           $.ajax({
                 type: "POST",
@@ -43,10 +43,15 @@ function saveItem() {
                     //csrf_token: $("#csrf_token").val()
                 },
                 success: function(response) {
-                    swal("Đã phê duyệt!", {
-                        icon: "success",
+                    Swal.fire({ 
+                        title: "Done!",
+                        icon: "success"
                     });
-                    setTimeout(function(){location.reload(); }, 5000);
+                    setTimeout(function(){location.reload(); },1000);
+                    // swal("Đã phê duyệt!", {
+                    //     icon: "success",
+                    // });
+                    //setTimeout(function(){location.reload(); }, 000);
                 },
                 error: function(xhr, status, error) {
                     $("#error-message").addClass("alert-danger");
@@ -95,5 +100,54 @@ function editItembyId(category_id) {
             $("#error-message").show();
         }   
     });
+
+}
+
+
+function deleteItem(category_id) {
+    Swal.fire({
+        title: "Xóa chủ đề",
+        text: "Bạn muốn xóa chủ đề này?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+      }).then((result) => {
+        if (result.isConfirmed) {
+
+            $.ajax({
+                type: "POST",
+                url: "../admin/delete_category.php",
+                data: {
+                    category_id : category_id
+                },
+                success: function(response) {
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: "top-end",
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                          toast.onmouseenter = Swal.stopTimer;
+                          toast.onmouseleave = Swal.resumeTimer;
+                        }
+                      });
+                      Toast.fire({
+                        icon: "success",
+                        title: "Deleted successfully"
+                      });                   
+  
+                    setTimeout(function(){location.reload(); }, 1000);                 
+                },
+                error: function(xhr, status, error) {
+                    $("#error-message").addClass("alert-danger");
+                    $("#error-message").text("Error connecting to server. Please try again later.");
+                    $("#error-message").show();
+                }   
+            });
+        }
+      });
 
 }

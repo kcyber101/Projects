@@ -14,8 +14,8 @@ Dưới đây là toàn bộ thông tin của source mình:
 
 5. Quản trị viên có quyền 
 - Thêm và thay đổi vai trò (role), phê duyệt người dùng,  chưa bổ sung tính năng xoá người dùng
-- Xem danh sách chủ đề
-- Xem danh sách và phê duyệt bài viết
+- Xem danh sách, tạo chủ đề
+- Xem danh sách, tạo và phê duyệt bài viết
 
 6. Biên tập viên có quyền
 
@@ -45,10 +45,12 @@ Cảm ơn bạn đã theo dõi
 ```$servername = "{IP của máy bạn}";```
 
 ví dụ: $servername = "192.168.152.21";
-
+Lưu ý: Để mặc định localhost có thể truy cập được nhưng đội khi bị lỗi, nên chỉnh sửa IP
 4, Tạo user admin/123 vào trong DB
 
 ```INSERT INTO users (uuid, username, password_hash, email, role, is_approved)
 VALUES (uuid(),'admin', '$2y$10$THEwapcjwuuqD1x5yGKIheMuoi3KrGGq/G0PgX1JTdzT1PcsdYCiW', 'admin101@example.com', 'admin', TRUE);
 ```
 5, Trải nghiệm thôi
+
+http://localhost/

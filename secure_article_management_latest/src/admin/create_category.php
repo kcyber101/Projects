@@ -1,8 +1,9 @@
 <?php
+session_start();
 include '../connect.php';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_SESSION['role']==='editor') {
-    $name = $_POST['name'];
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_SESSION['role']==='editor' || $_SESSION['role']==='admin')) {
+    $name = htmlspecialchars($_POST['name']);
     $description = $_POST['description'];
     // Lấy ID người dùng từ session
     $editorId = $_SESSION['user_id']; 

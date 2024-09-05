@@ -73,11 +73,10 @@ CREATE TABLE login_history (
 CREATE INDEX idx_user_role ON users(role);
 CREATE INDEX idx_article_category ON articles(category_id);
 
+ALTER TABLE 
 
-
-
-INSERT INTO users (uuid, username, password_hash, email, role, is_approved)
-VALUES (uuid(),'admin', '$2y$10$THEwapcjwuuqD1x5yGKIheMuoi3KrGGq/G0PgX1JTdzT1PcsdYCiW', 'admin101@example.com', 'admin', TRUE);
+-- Theem người dùng admin/123
+INSERT INTO users (uuid, username, password_hash, email, role, is_approved) VALUES (uuid(),'admin', '$2y$10$THEwapcjwuuqD1x5yGKIheMuoi3KrGGq/G0PgX1JTdzT1PcsdYCiW', 'admin101@example.com', 'admin', TRUE);
 
 
 

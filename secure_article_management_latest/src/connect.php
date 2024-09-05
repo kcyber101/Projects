@@ -1,5 +1,5 @@
 <?php
-$servername = "192.168.152.21";
+$servername = "192.168.1.3";
 $username = "user";
 $password = "user_password";
 $dbname = "secure_article_management";

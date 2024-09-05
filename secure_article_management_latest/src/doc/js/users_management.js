@@ -16,7 +16,7 @@ $(document).ready(function() {
         });
     });
 
-function deleteItem(userid) {
+function deleteItem(user_id) {
     Swal.fire({
         title: "Xóa tài khoản",
         text: "Bạn muốn xóa tài khoản này?",
@@ -27,51 +27,45 @@ function deleteItem(userid) {
         confirmButtonText: "Yes, delete it!"
       }).then((result) => {
         if (result.isConfirmed) {
-          Swal.fire({
-            title: "Deleted!",
-            text: "Your file has been deleted.",
-            icon: "success"
-          });
+          $.ajax({
+            type: "POST",
+            url: "../admin/delete_user.php",
+            data: {
+              user_id : user_id,
+              csrf_token: $("#csrf_token").val()
+            },
+            success: function(response) {
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                      toast.onmouseenter = Swal.stopTimer;
+                      toast.onmouseleave = Swal.resumeTimer;
+                    }
+                  });
+                  Toast.fire({
+                    icon: "success",
+                    title: "Deleted successfully"
+                  });                   
+
+                setTimeout(function(){location.reload(); }, 1000);                 
+            },
+            error: function(xhr, status, error) {
+                $("#error-message").addClass("alert-danger");
+                $("#error-message").text("Error connecting to server. Please try again later.");
+                $("#error-message").show();
+            }   
+        });
         }
       });
-    // jQuery(function () {
-    //     jQuery(".trash").click(function () {
-        //   swal({
-        //     title: "Cảnh báo",
-           
-        //     text: "Bạn có chắc chắn là muốn xóa người dùng này?",
-        //     buttons: ["Hủy bỏ", "Đồng ý"],
-        //   })
-        //     .then((willDelete) => {
-        //       if (willDelete) {
-        //         swal("Đã xóa thành công.!", {
-                  
-        //         });
-        //       }
-        //     });
-        // });
-        
-    //   });
-
-    // $.ajax({
-    //     type: "POST",
-    //     url: "../admin/user_management.php",
-    //     data: {
-    //         id: id
-    //     },
-    //     success: function(response) {
-    //         $("#usertableContainer").html(response);
-    //     },
-    //     error: function(xhr, status, error) {
-    //         $("#error-message").addClass("alert-danger");
-    //         $("#error-message").text("Error connecting to server. Please try again later.");
-    //         $("#error-message").show();
-    //     }   
-    // });
+ 
 }
 
 
-function approveItem(userid) {
+function approveItem(user_id) {
     Swal.fire({
         title: "Phê duyệt",
         text: "Cho phép người dùng này hoạt động",
@@ -82,23 +76,31 @@ function approveItem(userid) {
         confirmButtonText: "Đồng ý"
       }).then((result) => {
         if (result.isConfirmed) {
-          Swal.fire({
-            title: "Approved!",
-            text: "Account has been Approved.",
-            icon: "success"
-          });
+
               $.ajax({
                 type: "POST",
                 url: "../admin/approve_user.php",
                 data: {
-                    id: userid,
-                    csrf_token: $("#csrf_token").val()
+                  user_id: user_id,
+                  csrf_token: $("#csrf_token").val()
                 },
                 success: function(response) {
-                    swal("Đã phê duyệt!", {
-                        icon: "success",
-                    });
-                    setTimeout(function(){location.reload(); }, 5000);
+                  const Toast = Swal.mixin({
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                      toast.onmouseenter = Swal.stopTimer;
+                      toast.onmouseleave = Swal.resumeTimer;
+                    }
+                  });
+                  Toast.fire({
+                    icon: "success",
+                    title: "Approved successfully"
+                  }); 
+                    setTimeout(function(){location.reload(); }, 1000);
                 },
                 error: function(xhr, status, error) {
                     $("#error-message").addClass("alert-danger");
