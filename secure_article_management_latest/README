@@ -42,11 +42,13 @@ Cảm ơn bạn đã theo dõi
 /* Triển khai ứng dụng bằng docker compose*/
 - Chuẩn bị docker, docker compose
 
-1, Đầu tiên cần build myphp image cần thiết bằng lệnh
+1, Đầu tiên cần build myphp image cần thiết bằng cách cd ./secure_article_management_latest và chạy lệnh
 
-$docker build .  tag myphp:8.1-apache
+docker build .  tag myphp:8.1-apache
 
-2, Di chuyển vào thư mục chứa file docker-compose.yml gõ lệnh: `docker compose up -d`
+2, Sau khi build xong, tại vị trí file docker-compose.yml gõ lệnh:
+
+docker compose up -d
 
 3, Trải nghiệm thôi
 
