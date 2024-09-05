@@ -29,9 +29,7 @@ $articles = $stmt->fetchAll(PDO::FETCH_ASSOC);
    
 // </td>
 // </tr>
-if (!isset($_SESSION['role'])) {
-    die('Permission denied');
-}
+
 
 if (isset($_POST['action']) and $_POST['action'] == "edit_article" and isset($_POST['article_id'])) {
     $articleId = intval($_POST['article_id']);
