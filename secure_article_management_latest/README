@@ -1,0 +1,54 @@
+/*  PHẦN NỘI DUNG   */
+
+Xin chào mình là Bình An
+
+Dưới đây là toàn bộ thông tin của source mình:
+
+1. Đọc phần README khi tải về
+
+2. Source có bảo mật chức năng đăng nhập và đăng ký bằng file /src/js/main.js
+
+3. Tính năng kiểm tra lỗi khi đăng nhập có thông báo khi nhập sai và đúng.
+
+4. Giao diện sử dụng của Lập trình viên Trường Võ, đã thay đổi nhiều nội dung bằng phần mềm quản lý bài viết
+
+5. Quản trị viên có quyền 
+- Thêm và thay đổi vai trò (role), phê duyệt người dùng,  chưa bổ sung tính năng xoá người dùng
+- Xem danh sách chủ đề
+- Xem danh sách và phê duyệt bài viết
+
+6. Biên tập viên có quyền
+
+  -  Thêm, sửa Chủ đề, chưa bổ sung tính năng xoá chủ đề
+  -  Xem danh sách, Sửa và phê duyệt bài viết của tác giả
+
+7. Tác giả có quyền 
+- Thêm mới và chỉnh bài viết của mình, chưa bổ sung tính năng xoá
+
+Cảm ơn bạn đã theo dõi 
+
+/=========================================/
+
+
+/* Triển khai ứng dụng bằng docker compose*/
+
+1, Đầu tiên cần build myphp image cần thiết bằng
+
+`docker build .  tag myphp:8.1-apache`
+
+
+2, Di chuyển vào thư mục chứa file docker-compose.yml gõ lệnh:
+`docker compose up -d`
+
+3, Chỉnh sửa cấu hình file connect.php
+
+```$servername = "{IP của máy bạn}";```
+
+ví dụ: $servername = "192.168.152.21";
+
+4, Tạo user admin/123 vào trong DB
+
+```INSERT INTO users (uuid, username, password_hash, email, role, is_approved)
+VALUES (uuid(),'admin', '$2y$10$THEwapcjwuuqD1x5yGKIheMuoi3KrGGq/G0PgX1JTdzT1PcsdYCiW', 'admin101@example.com', 'admin', TRUE);
+```
+5, Trải nghiệm thôi

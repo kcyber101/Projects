@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Detail</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+        }
+        .navbar {
+            background-color: #343a40;
+        }
+        .navbar-brand, .nav-link {
+            color: #fff !important;
+        }
+        .post-header {
+            background-color: #f8f9fa;
+            padding: 50px 0;
+            text-align: center;
+        }
+        .post-header h1 {
+            font-size: 3rem;
+            font-weight: bold;
+        }
+        .post-header p {
+            font-size: 1.2rem;
+            color: #666;
+        }
+        .post-content {
+            padding: 40px 0;
+        }
+        .post-content p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+        footer {
+            background-color: #343a40;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="index.html">My Blog</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">Home</a>
+                </li>
+                <!-- <li class="nav-item">
+                    <a class="nav-link" href="#">Posts</a>
+                </li> -->
+                <li class="nav-item">
+                    <a class="nav-link" href="./register.php">Register</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="./login.php">Login</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Post Header -->
+    <section class="post-header">
+        <div class="container">
+            <h1 id="postTitle">Post Title Here</h1>
+            <p id="postAuthor">Author: <span>Author Name</span> | <span id="postDate">Date: 2024-09-01</span></p>
+        </div>
+    </section>
+
+    <!-- Post Content -->
+    <section class="post-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <p id="postContent">This is the detailed content of the post. It is a long description that can contain paragraphs, images, and other media.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 My Blog. All rights reserved.</p>
+    </footer>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Custom JS for loading post details -->
+    <script>
+        // Load post details from URL parameters
+        function getQueryParam(param) {
+            let urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        document.getElementById('postTitle').innerText = getQueryParam('title');
+        document.getElementById('postAuthor').innerText = 'Author: ' + getQueryParam('author');
+        document.getElementById('postDate').innerText = 'Date: ' + getQueryParam('date');
+        document.getElementById('postContent').innerText = getQueryParam('content');
+    </script>
+</body>
+</html>
