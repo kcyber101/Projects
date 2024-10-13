@@ -49,7 +49,6 @@ CREATE TABLE NK_DETAIL(
 -- Create sample data
 -- stocker password is 'stocker'
 INSERT INTO USERS (USERNAME, PASSWORD_HASH, ROLES) VALUES ('admin', '$2y$10$THEwapcjwuuqD1x5yGKIheMuoi3KrGGq/G0PgX1JTdzT1PcsdYCiW', 'admin');
-INSERT INTO USERS (USERNAME, PASSWORD_HASH, ROLES) VALUES ('stocker', 'stocker', 'stocker');
 
 -- Insert sample data to products table
 INSERT INTO PRODUCTS (PRODUCT_NAME, CATEGORY_ID, DESCRIBES, PRODUCT_NUMBER, PRICE) VALUES
